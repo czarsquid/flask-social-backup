@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Flask Social</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Flask Social</h1>
+
+f username != 'Guest' %}
+		<h2>Welcome, {{ username }}</h2>
+
+		<!-- Upload Image Form -->
+		<div class="upload-box">
+			<h3>Upload an Image</h3>
+			<form action="{{ url_for('dashboard') }}" method="POST" enctype="multipart/form-data">
+				<input type="file" name="file" required>
+				<button type="submit">Upload</button>
+			</form>
+		</div>
+
+		<!-- Display posts/images if needed -->
+		<div class="posts-section">
+			<h3>Recent Posts</h3>
+			{% for post in posts %}
+				<div class="post">
+					<p><strong>{{ post['username'] }}</strong>: {{ post['content'] }}</p>
+				</div>
+			{% else %}
+				<p>No posts available yet. Be the first to post!</p>
+			{% endfor %}
+		</div>
+
+		<!-- Logout button -->
+		<div class="logout-box">
+			<a href="{{ url_for('logout') }}">
+				<button type="button">Logout</button>
+			</a>
+		</div>
+	{% else %}
+		<p>You are currently logged out. Please log in to continue.</p>
+		<a href="{{ url_for('login') }}">
+			<button type="button">Login</button>
+		</a>
+	{% endif %}
+
+    </div>
+</body>
+</html>
